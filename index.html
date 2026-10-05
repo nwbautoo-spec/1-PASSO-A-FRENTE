@@ -1,66 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1 PASSO A FRENTE - Moda Feminina</title>
+<html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1 PASSO A FRENTE | MASASU, SU EMPREENDIMENTOS</title>
 <style>
 body{font-family:Arial;background:#fffaf5;margin:0;padding:0}
-header{background:#ff6a00;color:white;padding:15px;text-align:center;position:sticky;top:0;z-index:10}
+header{background:white;padding:10px;text-align:center;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,0.08);border-bottom:3px solid #ff6a00}
+header img{max-width:300px;width:95%;height:auto;border-radius:10px}
 .produtos{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
-.card{border:1px solid #eee;border-radius:16px;padding:10px;background:white;text-align:center;box-shadow:0 2px 5px rgba(0,0,0,0.05)}
+.card{border:1px solid #eee;border-radius:16px;padding:10px;background:white;text-align:center;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
 .card img{width:100%;height:180px;object-fit:cover;border-radius:12px}
-.card b{display:block;margin:8px 0;font-size:14px}
-.preco{color:#ff6a00;font-weight:bold;font-size:17px}
-.btn{background:#ff6a00;color:white;border:none;padding:10px 12px;border-radius:25px;width:100%;margin-top:8px;font-weight:bold}
+.preco{color:#ff6a00;font-weight:bold;font-size:17px;margin:5px 0}
+.btn{background:#ff6a00;color:white;border:none;padding:11px;border-radius:25px;width:100%;margin-top:8px;font-weight:bold}
 #admin{display:none;background:#fff3e6;padding:15px;border-radius:12px;margin:15px;border:2px dashed #ff6a00}
 input{width:92%;padding:12px;margin:6px 0;border-radius:10px;border:1px solid #ccc}
-</style>
-</head>
-<body>
-<header><h1 style="margin:0">1 PASSO A FRENTE 🧡</h1><small>Moda Feminina em Luanda</small></header>
-
-<div id="admin">
-<h3>🔒 PAINEL SECRETO - Só você vê</h3>
+.footer{text-align:center;padding:20px;color:#888;font-size:13px}
+</style></head><body>
+<header><img src="https://i.postimg.cc/28rjcZvm/Whats-App-Image-2026-10-05-at-16-11-16.jpg" alt="1 PASSO A FRENTE"></header>
+<div id="admin"><h3>🔒 Painel MASASU - Adicionar Produto</h3>
 <input id="nome" placeholder="Nome do produto">
-<input id="preco" type="number" placeholder="Preço ex: 12000">
+<input id="preco" type="number" placeholder="Preço ex: 15000">
 <input id="foto" placeholder="Link da foto (postimages.org)">
-<button class="btn" onclick="add()">Salvar Produto</button>
-<p style="font-size:12px;color:#666">Dica: Vá no postimages.org, carregue a foto e copie o Link Direto</p>
-</div>
-
+<button class="btn" onclick="add()">Salvar Produto</button></div>
 <div class="produtos" id="lista"></div>
-
+<div class="footer">1 PASSO A FRENTE - MASASU, SU EMPREENDIMENTOS<br>Luanda, Angola | WhatsApp: 926 457 554</div>
 <script>
-let produtos = JSON.parse(localStorage.getItem('produtos_loja_v3')) || [
+let produtos = JSON.parse(localStorage.getItem('produtos_masasu_v4')) || [
 {nome:"T-shirt Feminina Premium", preco:7500, foto:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"},
-{nome:"Calça Jeans Skinny", preco:15000, foto:"https://images.unsplash.com/photo-1541099649105-f69ad21f3246"},
+{nome:"Conjunto Masasu Chic", preco:25000, foto:"https://images.unsplash.com/photo-1485968579580-b6d095142e6e"},
 {nome:"Vestido Floral", preco:12000, foto:"https://images.unsplash.com/photo-1595777457583-95e059d581b8"}
 ];
-
-function mostrar(){
- document.getElementById('lista').innerHTML = produtos.map((p,i)=>`
-  <div class="card">
-   <img src="${p.foto}">
-   <b>${p.nome}</b>
-   <div class="preco">${p.preco} Kz</div>
-   <button class="btn" onclick="pedir('${p.nome}')">Pedir no WhatsApp</button>
-  </div>
- `).join('');
- localStorage.setItem('produtos_loja_v3', JSON.stringify(produtos));
-}
-function add(){
- let n=document.getElementById('nome').value, pr=document.getElementById('preco').value, f=document.getElementById('foto').value;
- if(!n||!pr||!f){alert("Preencha tudo!");return}
- produtos.push({nome:n, preco:pr, foto:f});
- document.getElementById('nome').value=document.getElementById('preco').value=document.getElementById('foto').value="";
- mostrar(); alert("✅ Produto adicionado com sucesso!");
-}
-function pedir(nome){window.open(`https://wa.me/244926457554?text=Olá! Quero ${nome} da 1 PASSO A FRENTE`)}
-// SEGREDO: Só mostra admin se colocar ?admin no final do link
-if(window.location.search.includes("admin")){
-  document.getElementById('admin').style.display="block";
-}
+function mostrar(){document.getElementById('lista').innerHTML=produtos.map(p=>`<div class="card"><img src="${p.foto}"><b>${p.nome}</b><div class="preco">${p.preco} Kz</div><button class="btn" onclick="window.open('https://wa.me/244926457554?text=Olá! Quero ${p.nome} - ${p.preco}Kz')">Pedir no WhatsApp</button></div>`).join('');localStorage.setItem('produtos_masasu_v4',JSON.stringify(produtos));}
+function add(){let n=document.getElementById('nome').value,pr=document.getElementById('preco').value,f=document.getElementById('foto').value;if(!n||!pr||!f){alert("Preencha tudo!");return}produtos.push({nome:n,preco:pr,foto:f});document.getElementById('nome').value=document.getElementById('preco').value=document.getElementById('foto').value="";mostrar();alert("✅ Produto adicionado!");}
+if(window.location.search.includes("admin")){document.getElementById('admin').style.display="block";}
 mostrar();
-</script>
-</body>
-</html>
+</script></body></html>
