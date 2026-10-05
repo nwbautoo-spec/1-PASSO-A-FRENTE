@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1 PASSO A FRENTE</title>
+<style>
+body{font-family:Arial;background:#fffaf5;margin:0;padding:10px}
+h1{text-align:center;color:#ff6a00}
+.produtos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{border:1px solid #ddd;border-radius:12px;padding:10px;background:white;text-align:center}
+.card img{width:100%;height:150px;object-fit:cover;border-radius:8px}
+.card b{display:block;margin:5px 0}
+.preco{color:#ff6a00;font-weight:bold;font-size:18px}
+.btn{background:#ff6a00;color:white;border:none;padding:8px 12px;border-radius:20px;width:100%;margin-top:5px}
+#admin{background:#fff3e6;padding:15px;border-radius:12px;margin:20px 0}
+input{width:95%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #ccc}
+</style>
+</head>
+<body>
+<h1>1 PASSO A FRENTE 🧡</h1>
+
+<div id="admin">
+<h3>➕ Adicionar Novo Produto (só você vê isso)</h3>
+<input id="nome" placeholder="Nome do produto ex: Vestido Floral">
+<input id="preco" type="number" placeholder="Preço ex: 12000">
+<input id="foto" placeholder="Link da foto (do postimages.org)">
+<button class="btn" onclick="add()">Salvar Produto na Loja</button>
+<button onclick="limpar()" style="margin-top:10px;background:#ccc;border:none;padding:5px;border-radius:10px">Apagar tudo e recomeçar</button>
+</div>
+
+<div class="produtos" id="lista"></div>
+
+<script>
+let produtos = JSON.parse(localStorage.getItem('produtos')) || [
+{nome:"T-shirt Feminina", preco:7500, foto:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"},
+{nome:"Calça Jeans", preco:15000, foto:"https://images.unsplash.com/photo-1541099649105-f69ad21f3246"}
+];
+
+function mostrar(){
+ document.getElementById('lista').innerHTML = produtos.map((p,i)=>`
+  <div class="card">
+   <img src="${p.foto}">
+   <b>${p.nome}</b>
+   <div class="preco">${p.preco} Kz</div>
+   <button class="btn" onclick="pedir('${p.nome}')">Pedir no WhatsApp</button>
+   <button onclick="remover(${i})" style="background:none;border:none;color:red;font-size:12px;margin-top:5px">remover</button>
+  </div>
+ `).join('');
+ localStorage.setItem('produtos', JSON.stringify(produtos));
+}
+function add(){
+ let n=nome.value, pr=preco.value, f=foto.value;
+ if(!n||!pr||!f){alert("Preencha tudo!");return}
+ produtos.push({nome:n, preco:pr, foto:f});
+ nome.value=preco.value=foto.value="";
+ mostrar(); alert("Produto adicionado!");
+}
+function remover(i){produtos.splice(i,1); mostrar();}
+function limpar(){if(confirm("Apagar tudo?")){produtos=[]; localStorage.clear(); mostrar();}}
+function pedir(nome){window.open(`https://wa.me/244926457554?text=Olá! Quero ${nome}`)}
+mostrar();
+</script>
+</body>
+</html>
