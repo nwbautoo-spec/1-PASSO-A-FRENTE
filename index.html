@@ -2,38 +2,39 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1 PASSO A FRENTE</title>
+<title>1 PASSO A FRENTE - Moda Feminina</title>
 <style>
-body{font-family:Arial;background:#fffaf5;margin:0;padding:10px}
-h1{text-align:center;color:#ff6a00}
-.produtos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.card{border:1px solid #ddd;border-radius:12px;padding:10px;background:white;text-align:center}
-.card img{width:100%;height:150px;object-fit:cover;border-radius:8px}
-.card b{display:block;margin:5px 0}
-.preco{color:#ff6a00;font-weight:bold;font-size:18px}
-.btn{background:#ff6a00;color:white;border:none;padding:8px 12px;border-radius:20px;width:100%;margin-top:5px}
-#admin{background:#fff3e6;padding:15px;border-radius:12px;margin:20px 0}
-input{width:95%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #ccc}
+body{font-family:Arial;background:#fffaf5;margin:0;padding:0}
+header{background:#ff6a00;color:white;padding:15px;text-align:center;position:sticky;top:0;z-index:10}
+.produtos{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
+.card{border:1px solid #eee;border-radius:16px;padding:10px;background:white;text-align:center;box-shadow:0 2px 5px rgba(0,0,0,0.05)}
+.card img{width:100%;height:180px;object-fit:cover;border-radius:12px}
+.card b{display:block;margin:8px 0;font-size:14px}
+.preco{color:#ff6a00;font-weight:bold;font-size:17px}
+.btn{background:#ff6a00;color:white;border:none;padding:10px 12px;border-radius:25px;width:100%;margin-top:8px;font-weight:bold}
+#admin{display:none;background:#fff3e6;padding:15px;border-radius:12px;margin:15px;border:2px dashed #ff6a00}
+input{width:92%;padding:12px;margin:6px 0;border-radius:10px;border:1px solid #ccc}
 </style>
 </head>
 <body>
-<h1>1 PASSO A FRENTE 🧡</h1>
+<header><h1 style="margin:0">1 PASSO A FRENTE 🧡</h1><small>Moda Feminina em Luanda</small></header>
 
 <div id="admin">
-<h3>➕ Adicionar Novo Produto (só você vê isso)</h3>
-<input id="nome" placeholder="Nome do produto ex: Vestido Floral">
+<h3>🔒 PAINEL SECRETO - Só você vê</h3>
+<input id="nome" placeholder="Nome do produto">
 <input id="preco" type="number" placeholder="Preço ex: 12000">
-<input id="foto" placeholder="Link da foto (do postimages.org)">
-<button class="btn" onclick="add()">Salvar Produto na Loja</button>
-<button onclick="limpar()" style="margin-top:10px;background:#ccc;border:none;padding:5px;border-radius:10px">Apagar tudo e recomeçar</button>
+<input id="foto" placeholder="Link da foto (postimages.org)">
+<button class="btn" onclick="add()">Salvar Produto</button>
+<p style="font-size:12px;color:#666">Dica: Vá no postimages.org, carregue a foto e copie o Link Direto</p>
 </div>
 
 <div class="produtos" id="lista"></div>
 
 <script>
-let produtos = JSON.parse(localStorage.getItem('produtos')) || [
-{nome:"T-shirt Feminina", preco:7500, foto:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"},
-{nome:"Calça Jeans", preco:15000, foto:"https://images.unsplash.com/photo-1541099649105-f69ad21f3246"}
+let produtos = JSON.parse(localStorage.getItem('produtos_loja_v3')) || [
+{nome:"T-shirt Feminina Premium", preco:7500, foto:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"},
+{nome:"Calça Jeans Skinny", preco:15000, foto:"https://images.unsplash.com/photo-1541099649105-f69ad21f3246"},
+{nome:"Vestido Floral", preco:12000, foto:"https://images.unsplash.com/photo-1595777457583-95e059d581b8"}
 ];
 
 function mostrar(){
@@ -43,21 +44,22 @@ function mostrar(){
    <b>${p.nome}</b>
    <div class="preco">${p.preco} Kz</div>
    <button class="btn" onclick="pedir('${p.nome}')">Pedir no WhatsApp</button>
-   <button onclick="remover(${i})" style="background:none;border:none;color:red;font-size:12px;margin-top:5px">remover</button>
   </div>
  `).join('');
- localStorage.setItem('produtos', JSON.stringify(produtos));
+ localStorage.setItem('produtos_loja_v3', JSON.stringify(produtos));
 }
 function add(){
- let n=nome.value, pr=preco.value, f=foto.value;
+ let n=document.getElementById('nome').value, pr=document.getElementById('preco').value, f=document.getElementById('foto').value;
  if(!n||!pr||!f){alert("Preencha tudo!");return}
  produtos.push({nome:n, preco:pr, foto:f});
- nome.value=preco.value=foto.value="";
- mostrar(); alert("Produto adicionado!");
+ document.getElementById('nome').value=document.getElementById('preco').value=document.getElementById('foto').value="";
+ mostrar(); alert("✅ Produto adicionado com sucesso!");
 }
-function remover(i){produtos.splice(i,1); mostrar();}
-function limpar(){if(confirm("Apagar tudo?")){produtos=[]; localStorage.clear(); mostrar();}}
-function pedir(nome){window.open(`https://wa.me/244926457554?text=Olá! Quero ${nome}`)}
+function pedir(nome){window.open(`https://wa.me/244926457554?text=Olá! Quero ${nome} da 1 PASSO A FRENTE`)}
+// SEGREDO: Só mostra admin se colocar ?admin no final do link
+if(window.location.search.includes("admin")){
+  document.getElementById('admin').style.display="block";
+}
 mostrar();
 </script>
 </body>
